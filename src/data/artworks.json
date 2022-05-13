@@ -1,7 +1,16 @@
 [
     {
-        "title": "First example",
+        "id": "01",
+        "title": "River somewhere",
+        "price": 345,
         "year": 2021,
-        "image": "images/good-background.png"
+        "image": "/images/good-background.png"
+    },
+    {
+        "id": "02",
+        "title": "Yves River somewhere",
+        "price": 345,
+        "year": 2021,
+        "image": "barcodes2019.jpg"
     }
 ]
