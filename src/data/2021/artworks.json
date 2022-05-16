@@ -2,8 +2,8 @@
     {
         "id": "2021_1",
         "title": "a 2021 piece",
-        "price": 250,
-        "year": 2021,
+        "price": "250",
+        "year": "2021",
         "image": "/images/2022/wallabies/03.JPG"
     }
 ]

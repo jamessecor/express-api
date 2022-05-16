@@ -1,6 +1,7 @@
 import * as express from 'express';
 import artworks2022 from '../data/2022/artworks.json';
 import artworks2021 from '../data/2021/artworks.json';
+import artworks2019 from '../data/2019/artworks.json';
 import * as R from 'ramda';
 import Artwork from '../models/artwork'
 
@@ -16,7 +17,8 @@ export const register = (app: express.Application) => {
         let works: Artwork[] = [];
         const artworks = [
             ...artworks2022,
-            ...artworks2021
+            ...artworks2021,
+            ...artworks2019
         ]
         const query = req.query;
         if (!R.isEmpty(query)) {
