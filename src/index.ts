@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import express from "express";
 import cors from 'cors';
+import * as apiRoutes from './routes/api';
 import * as artworkRoutes from './routes/artworks';
 import * as emailRoutes from './routes/email';
-import * as apiRoutes from './routes/api';
+import * as storeRoutes from './routes/store';
 
 const app = express();
 const port = 8080; // default port to listen
@@ -24,6 +25,7 @@ app.get("/status", (req, res) => {
 apiRoutes.register(app);
 artworkRoutes.register(app);
 emailRoutes.register(app);
+storeRoutes.register(app);
 
 // start the Express server
 app.listen(port, () => {
