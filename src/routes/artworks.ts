@@ -14,40 +14,48 @@ import * as R from 'ramda';
 import Artwork from '../models/artwork';
 
 export const register = (app: express.Application) => {
+    const artworks = [
+        ...artworks2022,
+        ...artworks2021,
+        ...artworks2020,
+        ...artworks2019,
+        ...artworks2018,
+        ...artworks2017,
+        ...artworks2016,
+        ...artworks2015,
+        ...artworks2014,
+        ...artworks2013,
+        ...artworks2012
+    ];
+
     // All requests to artworks
     app.all("/api/artworks", (req, res, next) => {
-        // if (!R.isEmpty(req.query)) {
         next();
-        // }
-    });
-
-    app.get("/api/artworks*", (req, res) => {
-        let works: Artwork[] = [];
-        const artworks = [
-            ...artworks2022,
-            ...artworks2021,
-            ...artworks2020,
-            ...artworks2019,
-            ...artworks2018,
-            ...artworks2017,
-            ...artworks2016,
-            ...artworks2015,
-            ...artworks2014,
-            ...artworks2013,
-            ...artworks2012
-        ];
-        const query = req.query;
-        if (!R.isEmpty(query)) {
-            if (query.year !== undefined && typeof query.year === 'string') {
-                works = artworks.filter(x => x.year.toString() === query.year)
-            }
-        } else {
-            works = artworks;
-        }
-        res.send(works);
     });
 
     app.get('/api/artworks/:id', (req, res) => {
-        res.send(req.params)
+        res.send(artworks.filter(x => x.id === req.params.id));
+    });
+
+    app.get("/api/artworks*", (req, res) => {
+        let works = artworks;
+        const query = req.query;
+        if (!R.isEmpty(query)) {
+            const hasYearQuery = query.year !== undefined && typeof query.year === 'string';
+            const yearQuery = hasYearQuery ? query.year : null;
+
+            const hasSearchQuery = query.search !== undefined && typeof query.search === 'string';
+            const searchQuery = hasSearchQuery ? query.search as string : null;
+
+            const applySearchQuery = (artwork: Artwork, search: string) => artwork.title.toLowerCase().includes(search) || artwork.media.toLowerCase().includes(search);
+
+            if (hasYearQuery) {
+                works = works.filter(artwork => artwork.year === yearQuery);
+            }
+            if (hasSearchQuery) {
+                works = works.filter(artwork => applySearchQuery(artwork, searchQuery));
+            }
+        }
+        res.send(works);
     });
 };
